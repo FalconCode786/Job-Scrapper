@@ -1,1300 +1,512 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JobMatch AI | Intelligent CV Analysis</title>
-    <style>
-        :root {
-            --primary: #6366f1;
-            --primary-glow: rgba(99, 102, 241, 0.5);
-            --secondary: #ec4899;
-            --accent: #8b5cf6;
-            --cyan: #06b6d4;
-            --bg: #030712;
-            --surface: rgba(255, 255, 255, 0.03);
-            --card: rgba(255, 255, 255, 0.02);
-            --text: #f8fafc;
-            --text-secondary: #94a3b8;
-            --border: rgba(255, 255, 255, 0.08);
-            --success: #10b981;
-            --warning: #f59e0b;
-            --danger: #ef4444;
-            --info: #3b82f6;
-            --glass-border: rgba(255, 255, 255, 0.1);
+    <title>JobMatch AI - Intelligent CV Analysis</title>
+    
+    <!-- Inter Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+                    },
+                    colors: {
+                        border: "hsl(var(--border))",
+                        input: "hsl(var(--input))",
+                        ring: "hsl(var(--ring))",
+                        background: "hsl(var(--background))",
+                        foreground: "hsl(var(--foreground))",
+                        primary: {
+                            DEFAULT: "hsl(var(--primary))",
+                            foreground: "hsl(var(--primary-foreground))",
+                        },
+                        secondary: {
+                            DEFAULT: "hsl(var(--secondary))",
+                            foreground: "hsl(var(--secondary-foreground))",
+                        },
+                        destructive: {
+                            DEFAULT: "hsl(var(--destructive))",
+                            foreground: "hsl(var(--destructive-foreground))",
+                        },
+                        muted: {
+                            DEFAULT: "hsl(var(--muted))",
+                            foreground: "hsl(var(--muted-foreground))",
+                        },
+                        accent: {
+                            DEFAULT: "hsl(var(--accent))",
+                            foreground: "hsl(var(--accent-foreground))",
+                        },
+                        popover: {
+                            DEFAULT: "hsl(var(--popover))",
+                            foreground: "hsl(var(--popover-foreground))",
+                        },
+                        card: {
+                            DEFAULT: "hsl(var(--card))",
+                            foreground: "hsl(var(--card-foreground))",
+                        },
+                    },
+                    borderRadius: {
+                        lg: "var(--radius)",
+                        md: "calc(var(--radius) - 2px)",
+                        sm: "calc(var(--radius) - 4px)",
+                    },
+                    keyframes: {
+                        "accordion-down": {
+                            from: { height: "0" },
+                            to: { height: "var(--radix-accordion-content-height)" },
+                        },
+                        "accordion-up": {
+                            from: { height: "var(--radix-accordion-content-height)" },
+                            to: { height: "0" },
+                        },
+                        "fade-in": {
+                            from: { opacity: "0", transform: "translateY(10px)" },
+                            to: { opacity: "1", transform: "translateY(0)" },
+                        },
+                        "fade-out": {
+                            from: { opacity: "1", transform: "translateY(0)" },
+                            to: { opacity: "0", transform: "translateY(10px)" },
+                        },
+                        "slide-in-right": {
+                            from: { transform: "translateX(100%)" },
+                            to: { transform: "translateX(0)" },
+                        },
+                        "slide-in-bottom": {
+                            from: { opacity: "0", transform: "translateY(20px)" },
+                            to: { opacity: "1", transform: "translateY(0)" },
+                        },
+                        "pulse-slow": {
+                            "0%, 100%": { opacity: "1" },
+                            "50%": { opacity: ".5" },
+                        },
+                        "spin-slow": {
+                            from: { transform: "rotate(0deg)" },
+                            to: { transform: "rotate(360deg)" },
+                        },
+                    },
+                    animation: {
+                        "accordion-down": "accordion-down 0.2s ease-out",
+                        "accordion-up": "accordion-up 0.2s ease-out",
+                        "fade-in": "fade-in 0.3s ease-out",
+                        "fade-out": "fade-out 0.2s ease-out",
+                        "slide-in-right": "slide-in-right 0.3s ease-out",
+                        "slide-in-bottom": "slide-in-bottom 0.4s ease-out",
+                        "pulse-slow": "pulse-slow 3s ease-in-out infinite",
+                        "spin-slow": "spin-slow 3s linear infinite",
+                    },
+                },
+            },
+        }
+    </script>
+    
+    <style type="text/tailwindcss">
+        @layer base {
+            :root {
+                --background: 0 0% 100%;
+                --foreground: 240 10% 3.9%;
+                --card: 0 0% 100%;
+                --card-foreground: 240 10% 3.9%;
+                --popover: 0 0% 100%;
+                --popover-foreground: 240 10% 3.9%;
+                --primary: 240 5.9% 10%;
+                --primary-foreground: 0 0% 98%;
+                --secondary: 240 4.8% 95.9%;
+                --secondary-foreground: 240 5.9% 10%;
+                --muted: 240 4.8% 95.9%;
+                --muted-foreground: 240 3.8% 46.1%;
+                --accent: 240 4.8% 95.9%;
+                --accent-foreground: 240 5.9% 10%;
+                --destructive: 0 84.2% 60.2%;
+                --destructive-foreground: 0 0% 98%;
+                --border: 240 5.9% 90%;
+                --input: 240 5.9% 90%;
+                --ring: 240 5.9% 10%;
+                --radius: 0.75rem;
+                
+                /* Custom success/warning colors */
+                --success: 142.1 76.2% 36.3%;
+                --success-foreground: 355.7 100% 97.3%;
+                --warning: 38 92% 50%;
+                --warning-foreground: 48 100% 96%;
+            }
+
+            .dark {
+                --background: 240 10% 3.9%;
+                --foreground: 0 0% 98%;
+                --card: 240 10% 3.9%;
+                --card-foreground: 0 0% 100%;
+                --popover: 240 10% 3.9%;
+                --popover-foreground: 0 0% 98%;
+                --primary: 0 0% 98%;
+                --primary-foreground: 240 5.9% 10%;
+                --secondary: 240 3.7% 15.9%;
+                --secondary-foreground: 0 0% 98%;
+                --muted: 240 3.7% 15.9%;
+                --muted-foreground: 240 5% 64.9%;
+                --accent: 240 3.7% 15.9%;
+                --accent-foreground: 0 0% 98%;
+                --destructive: 0 62.8% 30.6%;
+                --destructive-foreground: 0 0% 98%;
+                --border: 240 3.7% 15.9%;
+                --input: 240 3.7% 15.9%;
+                --ring: 240 4.9% 83.9%;
+                --success: 142.1 70.6% 45.3%;
+                --success-foreground: 144.9 80.4% 10%;
+                --warning: 38 92% 50%;
+                --warning-foreground: 48 100% 96%;
+            }
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        @layer base {
+            * {
+                @apply border-border;
+            }
+            body {
+                @apply bg-background text-foreground font-sans antialiased;
+                font-feature-settings: "rlig" 1, "calt" 1;
+            }
         }
 
-        @property --gradient-angle {
-            syntax: "<angle>";
-            initial-value: 0deg;
-            inherits: false;
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: hsl(var(--muted));
+        }
+        ::-webkit-scrollbar-thumb {
+            background: hsl(var(--muted-foreground) / 0.3);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: hsl(var(--muted-foreground) / 0.5);
         }
 
-        @keyframes gradient-rotate {
-            0% { --gradient-angle: 0deg; }
-            100% { --gradient-angle: 360deg; }
+        /* Glassmorphism utilities */
+        .glass {
+            @apply bg-white/70 dark:bg-black/50 backdrop-blur-xl border border-white/20 dark:border-white/10;
+        }
+        
+        .glass-card {
+            @apply bg-card/80 backdrop-blur-md border border-border/50 shadow-lg;
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(2deg); }
+        /* Animated gradient background */
+        .animated-gradient {
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
         }
 
-        @keyframes float-reverse {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(20px) rotate(-2deg); }
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
-        @keyframes pulse-glow {
-            0%, 100% { opacity: 0.4; transform: scale(1); }
-            50% { opacity: 0.8; transform: scale(1.1); }
-        }
-
-        @keyframes slide-up {
-            from { opacity: 0; transform: translateY(40px) scale(0.95); filter: blur(10px); }
-            to { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
-        }
-
-        @keyframes fade-in {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        @keyframes shimmer {
-            0% { background-position: -1000px 0; }
-            100% { background-position: 1000px 0; }
-        }
-
-        @keyframes orbit {
-            from { transform: rotate(0deg) translateX(150px) rotate(0deg); }
-            to { transform: rotate(360deg) translateX(150px) rotate(-360deg); }
-        }
-
-        @keyframes morph {
-            0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
-            50% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
-        }
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            min-height: 100vh;
-            line-height: 1.6;
-            overflow-x: hidden;
-            position: relative;
-        }
-
-        /* Animated Mesh Background */
+        /* Mesh gradient overlay */
         .mesh-bg {
-            position: fixed;
-            inset: 0;
-            z-index: -2;
-            background: 
-                radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.15) 0px, transparent 50%),
-                radial-gradient(at 100% 0%, rgba(236, 72, 153, 0.15) 0px, transparent 50%),
-                radial-gradient(at 100% 100%, rgba(139, 92, 246, 0.15) 0px, transparent 50%),
-                radial-gradient(at 0% 100%, rgba(6, 182, 212, 0.15) 0px, transparent 50%);
-            filter: blur(60px);
-            animation: pulse-glow 10s ease-in-out infinite;
-        }
-
-        .grid-overlay {
-            position: fixed;
-            inset: 0;
-            z-index: -1;
+            background-color: hsl(var(--background));
             background-image: 
-                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-            background-size: 50px 50px;
-            mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
+                radial-gradient(at 0% 0%, hsl(var(--primary) / 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 0%, hsl(var(--secondary) / 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, hsl(var(--accent) / 0.15) 0px, transparent 50%),
+                radial-gradient(at 0% 100%, hsl(var(--muted) / 0.15) 0px, transparent 50%);
+            filter: blur(60px);
         }
 
-        /* Floating Orbs */
-        .orb {
-            position: fixed;
-            border-radius: 50%;
-            filter: blur(80px);
-            z-index: -1;
-            opacity: 0.4;
+        /* Focus visible ring */
+        .focus-ring {
+            @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background;
         }
 
-        .orb-1 {
-            width: 400px;
-            height: 400px;
-            background: var(--primary);
-            top: -100px;
-            left: -100px;
-            animation: float 8s ease-in-out infinite, morph 20s ease-in-out infinite;
+        /* Loading skeleton */
+        .skeleton {
+            @apply animate-pulse bg-muted rounded-md;
         }
 
-        .orb-2 {
-            width: 300px;
-            height: 300px;
-            background: var(--secondary);
-            bottom: 10%;
-            right: -50px;
-            animation: float-reverse 10s ease-in-out infinite, morph 25s ease-in-out infinite;
-        }
-
-        .orb-3 {
-            width: 250px;
-            height: 250px;
-            background: var(--cyan);
-            top: 40%;
-            left: 20%;
-            animation: float 12s ease-in-out infinite;
-            opacity: 0.2;
-        }
-
-        /* Header & Navigation */
-        header {
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            backdrop-filter: blur(20px);
-            background: rgba(3, 7, 18, 0.7);
-            border-bottom: 1px solid var(--border);
-            padding: 1rem 0;
-        }
-
-        .nav-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            text-decoration: none;
-        }
-
-        .logo-wrapper {
-            position: relative;
-            width: 48px;
-            height: 48px;
-        }
-
-        .logo-glow {
-            position: absolute;
-            inset: -5px;
-            background: conic-gradient(from var(--gradient-angle), var(--primary), var(--secondary), var(--accent), var(--primary));
-            border-radius: 16px;
-            animation: gradient-rotate 3s linear infinite;
-            opacity: 0.5;
-            filter: blur(8px);
-        }
-
-        .logo-icon {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            background: var(--bg);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            backdrop-filter: blur(10px);
-        }
-
-        .logo-icon svg {
-            width: 28px;
-            height: 28px;
-            fill: url(#logo-gradient);
-        }
-
-        .brand-text h1 {
-            font-size: 1.5rem;
-            font-weight: 800;
-            background: linear-gradient(to right, #fff, #c7d2fe, #a5b4fc);
-            background-size: 200% auto;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: shimmer 3s linear infinite;
-            letter-spacing: -0.5px;
-        }
-
-        .brand-text p {
-            font-size: 0.75rem;
-            color: var(--text-secondary);
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            margin-top: -2px;
-        }
-
-        /* Hero Upload Section */
-        .hero-section {
-            position: relative;
-            max-width: 900px;
-            margin: 4rem auto;
-            padding: 0 2rem;
-            animation: slide-up 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .upload-container {
-            position: relative;
-            background: var(--card);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--border);
-            border-radius: 32px;
-            padding: 3rem;
-            overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .upload-container::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(circle at 50% -20%, rgba(99, 102, 241, 0.15), transparent 50%);
-            pointer-events: none;
-        }
-
-        .upload-zone {
-            position: relative;
-            border: 2px dashed rgba(99, 102, 241, 0.3);
-            border-radius: 24px;
-            padding: 4rem 2rem;
-            text-align: center;
-            transition: all 0.4s;
-            cursor: pointer;
-            background: rgba(99, 102, 241, 0.02);
-        }
-
-        .upload-zone:hover, .upload-zone.dragover {
-            border-color: var(--primary);
-            background: rgba(99, 102, 241, 0.05);
-            transform: translateY(-2px);
-            box-shadow: 0 20px 40px -10px rgba(99, 102, 241, 0.2);
-        }
-
-        .upload-input {
-            position: absolute;
-            inset: 0;
-            opacity: 0;
-            cursor: pointer;
-            z-index: 10;
-        }
-
-        .upload-icon-hero {
-            width: 120px;
-            height: 120px;
-            margin: 0 auto 2rem;
-            position: relative;
-        }
-
-        .upload-icon-outer {
-            position: absolute;
-            inset: 0;
-            background: conic-gradient(from 0deg, var(--primary), var(--secondary), var(--accent), var(--primary));
-            border-radius: 30px;
-            animation: gradient-rotate 4s linear infinite;
-            opacity: 0.3;
-            filter: blur(10px);
-        }
-
-        .upload-icon-inner {
-            position: absolute;
-            inset: 3px;
-            background: var(--bg);
-            border: 1px solid var(--border);
-            border-radius: 28px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            backdrop-filter: blur(10px);
-        }
-
-        .upload-icon-inner svg {
-            width: 48px;
-            height: 48px;
-            stroke: url(#icon-gradient);
-            stroke-width: 1.5;
-            fill: none;
-        }
-
-        .hero-title {
-            font-size: 2.5rem;
-            font-weight: 800;
-            margin-bottom: 1rem;
-            line-height: 1.2;
-            background: linear-gradient(to right, #fff 0%, #a5b4fc 50%, #c7d2fe 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .hero-subtitle {
-            color: var(--text-secondary);
-            font-size: 1.125rem;
-            max-width: 500px;
-            margin: 0 auto 2rem;
-        }
-
-        .upload-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 1rem 2rem;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            border: none;
-            border-radius: 16px;
-            color: white;
-            font-weight: 600;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 10px 30px -10px rgba(99, 102, 241, 0.5);
-        }
-
-        .upload-btn::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to right, transparent, rgba(255,255,255,0.2), transparent);
-            transform: translateX(-100%);
-            transition: transform 0.6s;
-        }
-
-        .upload-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 20px 40px -10px rgba(99, 102, 241, 0.6);
-        }
-
-        .upload-btn:hover::before {
-            transform: translateX(100%);
-        }
-
-        /* Analysis Results */
-        .analysis-section {
-            max-width: 1200px;
-            margin: 3rem auto;
-            padding: 0 2rem;
-            animation: slide-up 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .analysis-card {
-            background: var(--surface);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--border);
-            border-radius: 24px;
-            padding: 2.5rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .analysis-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-        }
-
-        .analysis-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-        }
-
-        .analysis-title-group {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .analysis-icon {
-            width: 56px;
-            height: 56px;
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(16, 185, 129, 0.05));
-            border: 1px solid rgba(16, 185, 129, 0.3);
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--success);
-            animation: float 3s ease-in-out infinite;
-        }
-
-        .analysis-icon svg {
-            width: 28px;
-            height: 28px;
-            fill: none;
-            stroke: currentColor;
-            stroke-width: 2;
-        }
-
-        .analysis-text h2 {
-            font-size: 1.75rem;
-            font-weight: 700;
-            margin-bottom: 0.25rem;
-        }
-
-        .analysis-text p {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-        }
-
-        .category-pill {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.5rem 1rem;
-            background: rgba(99, 102, 241, 0.1);
-            border: 1px solid rgba(99, 102, 241, 0.3);
-            border-radius: 9999px;
-            font-weight: 600;
-            color: var(--primary);
-            font-size: 0.875rem;
-        }
-
-        .skills-showcase {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-            margin-top: 2rem;
-        }
-
-        .skill-group {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 1.5rem;
-            transition: all 0.4s;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .skill-group::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: linear-gradient(90deg, var(--group-color), transparent);
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-
-        .skill-group:hover {
-            transform: translateY(-5px);
-            border-color: rgba(255, 255, 255, 0.15);
-            box-shadow: 0 20px 40px -15px rgba(0,0,0,0.5);
-        }
-
-        .skill-group:hover::before {
-            opacity: 1;
-        }
-
-        .skill-group.tech { --group-color: var(--info); }
-        .skill-group.general { --group-color: var(--warning); }
-        .skill-group.soft { --group-color: var(--secondary); }
-
-        .group-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 1.25rem;
-        }
-
-        .group-label {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            font-weight: 600;
-            font-size: 0.875rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: var(--text-secondary);
-        }
-
-        .group-icon {
-            width: 36px;
-            height: 36px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.25rem;
-        }
-
-        .tech .group-icon { background: rgba(59, 130, 246, 0.1); }
-        .general .group-icon { background: rgba(245, 158, 11, 0.1); }
-        .soft .group-icon { background: rgba(236, 72, 153, 0.1); }
-
-        .group-count {
-            padding: 0.25rem 0.75rem;
-            background: rgba(255,255,255,0.05);
-            border-radius: 9999px;
-            font-size: 0.875rem;
-            font-weight: 600;
-            color: var(--text-secondary);
-        }
-
-        .skill-cloud {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.75rem;
-        }
-
-        .skill-tag-advanced {
-            padding: 0.5rem 1rem;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 10px;
-            font-size: 0.875rem;
-            font-weight: 500;
-            color: var(--text);
-            transition: all 0.3s;
-            cursor: default;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .skill-tag-advanced::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-            transform: translateX(-100%);
-            transition: transform 0.5s;
-        }
-
-        .skill-tag-advanced:hover {
-            background: rgba(255, 255, 255, 0.08);
-            border-color: rgba(255, 255, 255, 0.2);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px -10px rgba(0,0,0,0.5);
-        }
-
-        .skill-tag-advanced:hover::before {
-            transform: translateX(100%);
-        }
-
-        .experience-highlight {
-            grid-column: 1 / -1;
-            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.05));
-            border: 1px solid rgba(99, 102, 241, 0.2);
-            padding: 1.5rem;
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-        }
-
-        .exp-icon {
-            width: 60px;
-            height: 60px;
-            background: rgba(99, 102, 241, 0.2);
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.75rem;
-            animation: float 3s ease-in-out infinite;
-        }
-
-        .exp-content h4 {
-            font-size: 1rem;
-            color: var(--text-secondary);
-            margin-bottom: 0.25rem;
-        }
-
-        .exp-value {
-            font-size: 2rem;
-            font-weight: 800;
-            background: linear-gradient(to right, var(--primary), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        /* Filters */
-        .filters-wrapper {
-            max-width: 1200px;
-            margin: 3rem auto;
-            padding: 0 2rem;
-            animation: slide-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
-        }
-
-        .filters-glass {
-            background: var(--surface);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--border);
-            border-radius: 24px;
-            padding: 1.5rem;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)) auto;
-            gap: 1.5rem;
-            align-items: end;
-        }
-
-        .filter-group {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-
-        .filter-label {
-            font-size: 0.875rem;
-            font-weight: 600;
-            color: var(--text-secondary);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 0.25rem;
-        }
-
-        .filter-input, .filter-select {
-            padding: 0.875rem 1rem;
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            color: var(--text);
-            font-size: 0.95rem;
-            transition: all 0.3s;
-            outline: none;
-        }
-
-        .filter-input:focus, .filter-select:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
-        }
-
-        /* Icon-only search button */
-        .search-icon-btn {
-            width: 46px;
-            height: 46px;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            border: none;
-            border-radius: 12px;
-            color: white;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 10px 30px -10px rgba(99, 102, 241, 0.5);
-        }
-
-        .search-icon-btn:hover {
-            transform: translateY(-2px) scale(1.05);
-            box-shadow: 0 15px 30px -5px rgba(99, 102, 241, 0.6);
-        }
-
-        .search-icon-btn svg {
-            width: 20px;
-            height: 20px;
-            stroke: currentColor;
-            stroke-width: 2;
-            fill: none;
-        }
-
-        /* Results Section */
-        .results-container {
-            max-width: 1400px;
-            margin: 3rem auto;
-            padding: 0 2rem;
-        }
-
-        .results-header-advanced {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-            animation: slide-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
-        }
-
-        .results-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-        }
-
-        .search-query-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 0.625rem 1.25rem;
-            background: rgba(99, 102, 241, 0.1);
-            border: 1px solid rgba(99, 102, 241, 0.3);
-            border-radius: 9999px;
-            font-size: 0.9rem;
-            color: var(--primary);
-            animation: pulse-glow 4s infinite;
-        }
-
-        /* Jobs Grid */
-        .jobs-grid-advanced {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-            gap: 1.5rem;
-            perspective: 1000px;
-        }
-
-        .job-card-premium {
-            background: var(--card);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--border);
-            border-radius: 24px;
-            padding: 2rem;
-            position: relative;
-            overflow: hidden;
-            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-            transform-style: preserve-3d;
-            animation: slide-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
-        }
-
-        .job-card-premium::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.1), transparent 70%);
-            opacity: 0;
-            transition: opacity 0.5s;
-        }
-
-        .job-card-premium:hover {
-            transform: translateY(-8px) rotateX(2deg);
-            border-color: rgba(99, 102, 241, 0.3);
-            box-shadow: 
-                0 25px 50px -20px rgba(0, 0, 0, 0.5),
-                0 0 0 1px rgba(99, 102, 241, 0.1);
-        }
-
-        .job-card-premium:hover::before {
-            opacity: 1;
-        }
-
-        .match-score-circle {
-            position: absolute;
-            top: 1.5rem;
-            right: 1.5rem;
-            width: 64px;
-            height: 64px;
-            transform: translateZ(20px);
-        }
-
-        .circle-bg {
-            fill: none;
-            stroke: rgba(255, 255, 255, 0.1);
-            stroke-width: 3;
-        }
-
-        .circle-progress {
-            fill: none;
-            stroke-width: 3;
-            stroke-linecap: round;
-            transform: rotate(-90deg);
-            transform-origin: 50% 50%;
-            transition: stroke-dashoffset 1s ease;
-        }
-
-        .match-high .circle-progress { stroke: var(--success); filter: drop-shadow(0 0 6px var(--success)); }
-        .match-medium .circle-progress { stroke: var(--warning); filter: drop-shadow(0 0 6px var(--warning)); }
-        .match-low .circle-progress { stroke: var(--danger); filter: drop-shadow(0 0 6px var(--danger)); }
-
-        .score-text {
-            position: absolute;
-            inset: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            font-weight: 800;
-            font-size: 1.25rem;
-            line-height: 1;
-        }
-
-        .score-label {
-            font-size: 0.65rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            opacity: 0.7;
-            margin-top: 2px;
-        }
-
-        .job-content {
-            padding-right: 5rem;
-        }
-
-        .job-title-premium {
-            font-size: 1.35rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            line-height: 1.3;
-            color: var(--text);
-        }
-
-        .company-row {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            margin-bottom: 1.25rem;
-        }
-
-        .company-icon {
-            width: 32px;
-            height: 32px;
-            background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(139, 92, 246, 0.2));
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1rem;
-        }
-
-        .company-name {
-            font-weight: 600;
-            color: var(--primary-light);
-            font-size: 1.05rem;
-            background: linear-gradient(to right, var(--primary), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .job-meta-row {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.75rem;
-            margin-bottom: 1.25rem;
-        }
-
-        .meta-pill {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.375rem;
-            padding: 0.375rem 0.875rem;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 9999px;
-            font-size: 0.8rem;
-            font-weight: 500;
-            transition: all 0.3s;
-        }
-
-        .meta-pill:hover {
-            transform: translateY(-1px);
-            background: rgba(255, 255, 255, 0.06);
-        }
-
-        .pill-remote { color: var(--success); border-color: rgba(16, 185, 129, 0.2); }
-        .pill-onsite { color: var(--info); border-color: rgba(59, 130, 246, 0.2); }
-        .pill-visa { color: var(--secondary); border-color: rgba(236, 72, 153, 0.2); }
-
-        .job-description-premium {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-            line-height: 1.7;
-            margin-bottom: 1.5rem;
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-
-        .job-tags-row {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .tag-pill {
-            padding: 0.375rem 0.75rem;
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 8px;
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-            transition: all 0.2s;
-        }
-
-        .tag-pill:hover {
-            background: rgba(255, 255, 255, 0.06);
-            color: var(--text);
-        }
-
-        .job-footer-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-top: 1.5rem;
-            border-top: 1px solid var(--border);
-        }
-
-        .location-pill {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-
-        .apply-btn-premium {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.625rem 1.25rem;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            color: white;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.9rem;
-            transition: all 0.3s;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .apply-btn-premium::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transform: translateX(-100%);
-            transition: transform 0.5s;
-        }
-
-        .apply-btn-premium:hover {
-            background: var(--primary);
-            border-color: var(--primary);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px -5px rgba(99, 102, 241, 0.4);
-        }
-
-        .apply-btn-premium:hover::before {
-            transform: translateX(100%);
-        }
-
-        /* Loading State */
-        .loading-advanced {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 5rem;
-            gap: 1.5rem;
-        }
-
-        .loader-orbit {
-            width: 80px;
-            height: 80px;
-            position: relative;
-        }
-
-        .orbit-center {
-            position: absolute;
-            inset: 30%;
-            background: var(--primary);
-            border-radius: 50%;
-            filter: blur(8px);
-            animation: pulse-glow 2s infinite;
-        }
-
-        .orbit-ring {
-            position: absolute;
-            inset: 0;
-            border: 2px solid transparent;
-            border-top-color: var(--primary);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        .orbit-ring:nth-child(2) {
-            inset: 15%;
-            border-top-color: var(--secondary);
-            animation-duration: 1.5s;
-            animation-direction: reverse;
-        }
-
-        .orbit-ring:nth-child(3) {
-            inset: 30%;
-            border-top-color: var(--accent);
-            animation-duration: 2s;
-        }
-
-        /* Empty State */
-        .empty-advanced {
-            text-align: center;
-            padding: 6rem 2rem;
-            animation: slide-up 0.6s ease-out;
-        }
-
-        .empty-illustration {
-            width: 200px;
-            height: 200px;
-            margin: 0 auto 2rem;
-            position: relative;
-        }
-
-        .empty-bg {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(236, 72, 153, 0.1));
-            border-radius: 50%;
-            animation: float 6s ease-in-out infinite;
-        }
-
-        .empty-icon {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 4rem;
-            z-index: 2;
-        }
-
-        .hidden { display: none !important; }
-
-        @media (max-width: 768px) {
-            .hero-title { font-size: 1.75rem; }
-            .jobs-grid-advanced { grid-template-columns: 1fr; }
-            .analysis-header { flex-direction: column; gap: 1rem; align-items: flex-start; }
-            .filters-glass { grid-template-columns: 1fr; }
-            .job-card-premium { padding: 1.5rem; }
-            .match-score-circle { transform: scale(0.85); transform-origin: top right; }
+        /* Smooth transitions */
+        .transition-theme {
+            @apply transition-colors duration-300 ease-in-out;
         }
     </style>
 </head>
-<body>
-    <!-- Background Effects -->
-    <div class="mesh-bg"></div>
-    <div class="grid-overlay"></div>
-    <div class="orb orb-1"></div>
-    <div class="orb orb-2"></div>
-    <div class="orb orb-3"></div>
+<body class="min-h-screen relative transition-theme">
 
-    <!-- SVG Gradients -->
-    <svg width="0" height="0" style="position:absolute">
-        <defs>
-            <linearGradient id="logo-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" style="stop-color:#6366f1;stop-opacity:1" />
-                <stop offset="100%" style="stop-color:#ec4899;stop-opacity:1" />
-            </linearGradient>
-            <linearGradient id="icon-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" style="stop-color:#6366f1" />
-                <stop offset="100%" style="stop-color:#8b5cf6" />
-            </linearGradient>
-        </defs>
-    </svg>
+    <!-- Theme Toggle -->
+    <div class="fixed top-4 right-4 z-50">
+        <button 
+            id="theme-toggle" 
+            onclick="toggleTheme()"
+            class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-background border border-border shadow-sm hover:bg-accent hover:text-accent-foreground focus-ring transition-all"
+            aria-label="Toggle theme"
+        >
+            <!-- Sun icon -->
+            <svg id="sun-icon" class="w-5 h-5 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="4" stroke-width="2"></circle>
+                <path d="m12 2-2 2m2-2 2 2M2 12l2-2m-2 2 2 2m18-2-2-2m2 2-2 2m-8 8-2-2m2 2 2-2" stroke-width="2" stroke-linecap="round"></path>
+            </svg>
+            <!-- Moon icon -->
+            <svg id="moon-icon" class="w-5 h-5 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+        </button>
+    </div>
 
-    <!-- Header - System Active removed -->
-    <header>
-        <div class="nav-container">
-            <a href="#" class="brand">
-                <div class="logo-wrapper">
-                    <div class="logo-glow"></div>
-                    <div class="logo-icon">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" fill="url(#logo-gradient)"/>
-                        </svg>
-                    </div>
+    <!-- Background -->
+    <div class="fixed inset-0 mesh-bg -z-10 opacity-50"></div>
+    <div class="fixed inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] -z-10"></div>
+
+    <!-- Header -->
+    <header class="sticky top-0 z-40 w-full border-b border-border/40 bg-background/80 backdrop-blur-lg supports-[backdrop-filter]:bg-background/60">
+        <div class="container flex h-16 items-center justify-between px-4 md:px-8">
+            <div class="flex items-center gap-3">
+                <div class="relative flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-primary/80 text-primary-foreground shadow-lg">
+                    <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
                 </div>
-                <div class="brand-text">
-                    <h1>JobMatch AI</h1>
-                    <p>Neural CV Analysis</p>
+                <div class="flex flex-col">
+                    <span class="text-lg font-bold tracking-tight leading-none">JobMatch AI</span>
+                    <span class="text-[10px] text-muted-foreground uppercase tracking-wider font-medium">Neural Analysis</span>
                 </div>
-            </a>
-            <!-- Status indicator removed -->
+            </div>
         </div>
     </header>
 
-    <!-- Hero Upload Section -->
-    <section class="hero-section">
-        <div class="upload-container" id="upload-section">
-            <div class="upload-zone" id="drop-zone">
-                <input type="file" class="upload-input" id="cv-file" accept=".pdf,.docx,.txt" onchange="handleUpload(this)">
-                <div class="upload-icon-hero">
-                    <div class="upload-icon-outer"></div>
-                    <div class="upload-icon-inner">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                            <polyline points="17 8 12 3 7 8"></polyline>
-                            <line x1="12" y1="3" x2="12" y2="15"></line>
-                        </svg>
+    <main class="container mx-auto px-4 md:px-8 py-8 max-w-7xl space-y-8">
+
+        <!-- Upload Section -->
+        <section id="upload-section" class="relative group">
+            <div class="absolute -inset-1 bg-gradient-to-r from-primary/20 via-secondary/20 to-accent/20 rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
+            
+            <div class="relative glass-card rounded-xl p-8 md:p-12 text-center space-y-6 animate-fade-in">
+                <div class="mx-auto w-24 h-24 rounded-2xl bg-gradient-to-br from-primary/10 to-secondary/10 border border-border flex items-center justify-center mb-6 group-hover:scale-105 transition-transform duration-500">
+                    <svg class="h-12 w-12 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M12 15V3m0 12-4-4m4 4 4-4M2 17l.621 2.485A2 2 0 0 0 4.561 21h14.878a2 2 0 0 0 1.94-1.515L22 17" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+
+                <div class="space-y-2">
+                    <h1 class="text-3xl md:text-4xl font-bold tracking-tight">Upload your CV</h1>
+                    <p class="text-muted-foreground text-lg max-w-md mx-auto">
+                        Our AI extracts technical, general, and soft skills automatically. Supports PDF, DOCX, and TXT.
+                    </p>
+                </div>
+
+                <div class="flex justify-center">
+                    <label class="relative cursor-pointer group/btn">
+                        <input type="file" class="sr-only" id="cv-file" accept=".pdf,.docx,.txt" onchange="handleUpload(this)">
+                        <div class="inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-6 py-3 text-sm font-medium text-primary-foreground shadow-lg shadow-primary/20 hover:bg-primary/90 focus-ring transition-all hover:scale-105 active:scale-95">
+                            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" stroke-linecap="round"/>
+                                <polyline points="17 8 12 3 7 8" stroke-linecap="round" stroke-linejoin="round"/>
+                                <line x1="12" y1="3" x2="12" y2="15" stroke-linecap="round"/>
+                            </svg>
+                            Select Resume
+                        </div>
+                    </label>
+                </div>
+
+                <!-- Drag overlay -->
+                <div id="drop-zone" class="absolute inset-0 rounded-xl border-2 border-dashed border-primary/50 bg-primary/5 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity flex items-center justify-center">
+                    <span class="text-primary font-medium text-lg">Drop your file here</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Analysis Results -->
+        <section id="cv-results" class="hidden animate-slide-in-bottom">
+            <div class="glass-card rounded-xl p-6 md:p-8 space-y-6">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-border">
+                    <div class="flex items-center gap-4">
+                        <div class="h-12 w-12 rounded-full bg-green-500/10 border border-green-500/20 flex items-center justify-center text-green-600 dark:text-green-400">
+                            <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h2 class="text-2xl font-bold tracking-tight">Analysis Complete</h2>
+                            <p class="text-muted-foreground text-sm">Hierarchical skill extraction finished successfully</p>
+                        </div>
+                    </div>
+                    <div id="category-badge" class="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-1.5 text-sm font-medium text-primary border border-primary/20">
+                        <span>⚡</span>
+                        <span>Technical Profile</span>
                     </div>
                 </div>
-                <h2 class="hero-title">Drop your CV to start</h2>
-                <p class="hero-subtitle">Our AI extracts technical, general, and soft skills automatically. Supports PDF, DOCX, and TXT formats.</p>
-                <button class="upload-btn" onclick="document.getElementById('cv-file').click()">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                        <polyline points="17 8 12 3 7 8"></polyline>
-                        <line x1="12" y1="3" x2="12" y2="15"></line>
-                    </svg>
-                    Upload Resume
-                </button>
-            </div>
-        </div>
-    </section>
 
-    <!-- Analysis Results -->
-    <section class="analysis-section hidden" id="cv-results">
-        <div class="analysis-card">
-            <div class="analysis-header">
-                <div class="analysis-title-group">
-                    <div class="analysis-icon">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" stroke="currentColor" stroke-width="2" fill="none"/>
-                            <polyline points="22 4 12 14.01 9 11.01" stroke="currentColor" stroke-width="2" fill="none"/>
-                        </svg>
-                    </div>
-                    <div class="analysis-text">
-                        <h2>Analysis Complete</h2>
-                        <p>Hierarchical skill extraction finished successfully</p>
-                    </div>
+                <div id="skills-container" class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                    <!-- Dynamically populated -->
                 </div>
-                <span class="category-pill" id="category-badge">
-                    <span style="font-size: 1.1rem;">⚡</span>
-                    Technical Profile
-                </span>
             </div>
+        </section>
 
-            <div class="skills-showcase" id="skills-container">
-                <!-- Dynamically populated -->
+        <!-- Filters -->
+        <section id="filters" class="animate-slide-in-bottom" style="animation-delay: 0.1s">
+            <div class="glass-card rounded-xl p-4 md:p-6">
+                <div class="flex flex-col md:flex-row gap-4 items-end">
+                    <div class="flex-1 grid grid-cols-1 md:grid-cols-3 gap-4 w-full">
+                        <div class="space-y-2">
+                            <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Work Type</label>
+                            <select id="work-type" onchange="searchJobs()" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-theme">
+                                <option value="all">All Positions</option>
+                                <option value="true">🌐 Remote Only</option>
+                                <option value="false">🏢 On-site Only</option>
+                            </select>
+                        </div>
+
+                        <div class="space-y-2">
+                            <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Keywords</label>
+                            <input type="text" id="keywords" placeholder="Add search terms..." oninput="debouncedSearch()" 
+                                class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 transition-theme">
+                        </div>
+
+                        <div class="space-y-2">
+                            <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Location</label>
+                            <input type="text" id="location" placeholder="City or country..." oninput="debouncedSearch()" 
+                                class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 transition-theme">
+                        </div>
+                    </div>
+
+                    <button onclick="searchJobs()" class="inline-flex h-10 w-10 items-center justify-center rounded-md bg-primary text-primary-foreground shadow hover:bg-primary/90 focus-ring transition-all hover:scale-105 active:scale-95 shrink-0">
+                        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <circle cx="11" cy="11" r="8" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="m21 21-4.35-4.35" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <span class="sr-only">Search</span>
+                    </button>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Filters -->
-    <section class="filters-wrapper">
-        <div class="filters-glass">
-            <div class="filter-group">
-                <label class="filter-label">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="12" cy="12" r="10"/>
-                        <line x1="2" y1="12" x2="22" y2="12"/>
-                    </svg>
-                    Work Type
-                </label>
-                <select id="work-type" class="filter-select" onchange="searchJobs()">
-                    <option value="all">All Positions</option>
-                    <option value="true">🌐 Remote Only</option>
-                    <option value="false">🏢 On-site Only</option>
-                </select>
-            </div>
-
-            <div class="filter-group">
-                <label class="filter-label">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="11" cy="11" r="8"/>
-                        <path d="m21 21-4.35-4.35"/>
-                    </svg>
-                    Keywords
-                </label>
-                <input type="text" id="keywords" class="filter-input" placeholder="Add search terms..." oninput="debouncedSearch()">
-            </div>
-
-            <div class="filter-group">
-                <label class="filter-label">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
-                        <circle cx="12" cy="9" r="2.5"/>
-                    </svg>
-                    Location
-                </label>
-                <input type="text" id="location" class="filter-input" placeholder="City or country..." oninput="debouncedSearch()">
-            </div>
-
-            <!-- Icon-only search button -->
-            <button onclick="searchJobs()" class="search-icon-btn" title="Search Jobs">
-                <svg viewBox="0 0 24 24">
+        <!-- Results Header -->
+        <div id="results-header" class="hidden flex flex-col sm:flex-row sm:items-center justify-between gap-4 animate-fade-in">
+            <h2 class="text-2xl font-bold tracking-tight">Matching Opportunities</h2>
+            <div id="query-display" class="inline-flex items-center gap-2 rounded-full bg-secondary px-4 py-1.5 text-sm font-medium text-secondary-foreground">
+                <svg class="h-4 w-4 text-muted-foreground" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <circle cx="11" cy="11" r="8"/>
                     <path d="m21 21-4.35-4.35"/>
                 </svg>
-            </button>
-        </div>
-    </section>
-
-    <!-- Results -->
-    <section class="results-container">
-        <div class="results-header-advanced hidden" id="results-header">
-            <h2 class="results-title">Matching Opportunities</h2>
-            <div class="search-query-badge" id="query-display">
-                🔍 Searching...
+                <span id="query-text">Searching...</span>
             </div>
         </div>
 
-        <div id="loading" class="loading-advanced hidden">
-            <div class="loader-orbit">
-                <div class="orbit-ring"></div>
-                <div class="orbit-ring"></div>
-                <div class="orbit-ring"></div>
-                <div class="orbit-center"></div>
+        <!-- Loading State -->
+        <div id="loading" class="hidden py-12">
+            <div class="flex flex-col items-center justify-center gap-4">
+                <div class="relative h-12 w-12">
+                    <div class="absolute inset-0 rounded-full border-2 border-muted border-t-primary animate-spin"></div>
+                    <div class="absolute inset-2 rounded-full border-2 border-muted border-t-secondary animate-spin" style="animation-duration: 1.5s; animation-direction: reverse;"></div>
+                </div>
+                <p class="text-sm text-muted-foreground animate-pulse">Matching your profile...</p>
             </div>
-            <p style="color: var(--text-secondary);">Matching your profile...</p>
         </div>
 
-        <div id="jobs-container" class="jobs-grid-advanced"></div>
-
-        <div id="empty-state" class="empty-advanced hidden">
-            <div class="empty-illustration">
-                <div class="empty-bg"></div>
-                <div class="empty-icon">🔍</div>
+        <!-- Empty State -->
+        <div id="empty-state" class="hidden py-16 text-center animate-fade-in">
+            <div class="mx-auto h-32 w-32 rounded-full bg-muted flex items-center justify-center mb-6 text-4xl">
+                🔍
             </div>
-            <h2 style="font-size: 1.5rem; margin-bottom: 0.5rem;">No matches found</h2>
-            <p style="color: var(--text-secondary);">Try adjusting your filters or uploading a different CV</p>
+            <h3 class="text-xl font-semibold tracking-tight mb-2">No matches found</h3>
+            <p class="text-muted-foreground max-w-sm mx-auto">Try adjusting your filters or uploading a different CV to see more results.</p>
         </div>
-    </section>
+
+        <!-- Jobs Grid -->
+        <div id="jobs-container" class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            <!-- Dynamically populated -->
+        </div>
+
+    </main>
 
     <script>
+        // Theme Management
+        function getInitialTheme() {
+            if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                return 'dark';
+            }
+            return 'light';
+        }
+
+        function setTheme(theme) {
+            if (theme === 'dark') {
+                document.documentElement.classList.add('dark');
+                localStorage.theme = 'dark';
+            } else {
+                document.documentElement.classList.remove('dark');
+                localStorage.theme = 'light';
+            }
+        }
+
+        function toggleTheme() {
+            const isDark = document.documentElement.classList.contains('dark');
+            setTheme(isDark ? 'light' : 'dark');
+        }
+
+        // Initialize theme
+        setTheme(getInitialTheme());
+
+        // Drag and Drop
+        const uploadSection = document.getElementById('upload-section');
+        const dropZone = document.getElementById('drop-zone');
+        const fileInput = document.getElementById('cv-file');
+
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            uploadSection.addEventListener(eventName, preventDefaults, false);
+        });
+
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+
+        ['dragenter', 'dragover'].forEach(eventName => {
+            uploadSection.addEventListener(eventName, () => {
+                dropZone.classList.remove('opacity-0', 'pointer-events-none');
+                dropZone.classList.add('opacity-100');
+            }, false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            uploadSection.addEventListener(eventName, () => {
+                dropZone.classList.add('opacity-0', 'pointer-events-none');
+                dropZone.classList.remove('opacity-100');
+            }, false);
+        });
+
+        uploadSection.addEventListener('drop', handleDrop, false);
+
+        function handleDrop(e) {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            if (files.length) {
+                fileInput.files = files;
+                handleUpload(fileInput);
+            }
+        }
+
         let debounceTimer;
-        
         function debouncedSearch() {
             clearTimeout(debounceTimer);
             debounceTimer = setTimeout(searchJobs, 400);
         }
 
-        // Drag and drop
-        const dropZone = document.getElementById('drop-zone');
-        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-            dropZone.addEventListener(eventName, (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-            }, false);
-        });
-
-        ['dragenter', 'dragover'].forEach(eventName => {
-            dropZone.addEventListener(eventName, () => dropZone.classList.add('dragover'), false);
-        });
-
-        ['dragleave', 'drop'].forEach(eventName => {
-            dropZone.addEventListener(eventName, () => dropZone.classList.remove('dragover'), false);
-        });
-
-        dropZone.addEventListener('drop', (e) => {
-            const files = e.dataTransfer.files;
-            if (files.length) {
-                document.getElementById('cv-file').files = files;
-                handleUpload(document.getElementById('cv-file'));
-            }
-        });
-
         async function handleUpload(input) {
             const file = input.files[0];
             if (!file) return;
 
-            const uploadSection = document.getElementById('upload-section');
-            uploadSection.style.opacity = '0.7';
-            uploadSection.style.transform = 'scale(0.98)';
+            const btn = input.closest('label');
+            btn.classList.add('opacity-50', 'pointer-events-none');
 
             const formData = new FormData();
             formData.append('file', file);
@@ -1312,67 +524,79 @@
             } catch (err) {
                 alert('Upload failed: ' + err.message);
             } finally {
-                uploadSection.style.opacity = '1';
-                uploadSection.style.transform = 'scale(1)';
+                btn.classList.remove('opacity-50', 'pointer-events-none');
             }
         }
 
         function showCVResults(data) {
             document.getElementById('cv-results').classList.remove('hidden');
             
-            const categoryBadge = document.getElementById('category-badge');
-            if (data.primary_category === 'technical') {
-                categoryBadge.innerHTML = '<span style="font-size: 1.1rem;">⚡</span> Technical Profile';
-            } else if (data.primary_category === 'soft') {
-                categoryBadge.innerHTML = '<span style="font-size: 1.1rem;">🤝</span> Soft Skills Profile';
-            } else {
-                categoryBadge.innerHTML = '<span style="font-size: 1.1rem;">🎯</span> General Profile';
-            }
+            const badge = document.getElementById('category-badge');
+            const categories = {
+                'technical': { text: 'Technical Profile', icon: '⚡' },
+                'soft': { text: 'Soft Skills Profile', icon: '🤝' },
+                'general': { text: 'General Profile', icon: '🎯' }
+            };
+            const cat = categories[data.primary_category] || categories['general'];
+            badge.innerHTML = `<span>${cat.icon}</span><span>${cat.text}</span>`;
 
             const container = document.getElementById('skills-container');
             container.innerHTML = '';
 
-            const categories = [
-                { key: 'technical_skills', label: 'Technical Skills', icon: '💻', type: 'tech' },
-                { key: 'general_skills', label: 'General Skills', icon: '🛠️', type: 'general' },
-                { key: 'soft_skills', label: 'Soft Skills', icon: '🌟', type: 'soft' }
+            const skillGroups = [
+                { key: 'technical_skills', label: 'Technical Skills', icon: '💻', color: 'blue' },
+                { key: 'general_skills', label: 'General Skills', icon: '🛠️', color: 'amber' },
+                { key: 'soft_skills', label: 'Soft Skills', icon: '🌟', color: 'pink' }
             ];
 
-            categories.forEach(cat => {
-                const skills = data[cat.key] || [];
-                if (skills.length > 0) {
-                    const div = document.createElement('div');
-                    div.className = `skill-group ${cat.type}`;
-                    div.innerHTML = `
-                        <div class="group-header">
-                            <div class="group-label">
-                                <div class="group-icon">${cat.icon}</div>
-                                ${cat.label}
-                            </div>
-                            <span class="group-count">${skills.length}</span>
+            skillGroups.forEach(group => {
+                const skills = data[group.key] || [];
+                if (skills.length === 0) return;
+
+                const card = document.createElement('div');
+                card.className = 'rounded-lg border bg-card p-5 shadow-sm transition-all hover:shadow-md hover:border-primary/20';
+                
+                const colorClasses = {
+                    blue: 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/30 border-blue-200 dark:border-blue-800',
+                    amber: 'text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/30 border-amber-200 dark:border-amber-800',
+                    pink: 'text-pink-600 dark:text-pink-400 bg-pink-50 dark:bg-pink-950/30 border-pink-200 dark:border-pink-800'
+                };
+
+                card.innerHTML = `
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center gap-2">
+                            <span class="text-lg">${group.icon}</span>
+                            <h3 class="font-semibold tracking-tight">${group.label}</h3>
                         </div>
-                        <div class="skill-cloud">
-                            ${skills.map(s => `<span class="skill-tag-advanced">${s}</span>`).join('')}
-                        </div>
-                    `;
-                    container.appendChild(div);
-                }
+                        <span class="text-xs font-medium px-2 py-1 rounded-full bg-secondary text-secondary-foreground">${skills.length}</span>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        ${skills.map(skill => `
+                            <span class="inline-flex items-center rounded-md px-2.5 py-0.5 text-xs font-medium ring-1 ring-inset ${colorClasses[group.color]}">
+                                ${skill}
+                            </span>
+                        `).join('')}
+                    </div>
+                `;
+                container.appendChild(card);
             });
 
             if (data.experience_years > 0) {
-                const expDiv = document.createElement('div');
-                expDiv.className = 'experience-highlight';
-                expDiv.innerHTML = `
-                    <div class="exp-icon">⭐</div>
-                    <div class="exp-content">
-                        <h4>Professional Experience</h4>
-                        <div class="exp-value">${data.experience_years} Years</div>
+                const expCard = document.createElement('div');
+                expCard.className = 'rounded-lg border bg-gradient-to-br from-primary/5 to-secondary/5 p-5 shadow-sm md:col-span-full lg:col-span-1';
+                expCard.innerHTML = `
+                    <div class="flex items-center gap-4">
+                        <div class="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center text-xl">⭐</div>
+                        <div>
+                            <p class="text-sm text-muted-foreground font-medium">Professional Experience</p>
+                            <p class="text-2xl font-bold tracking-tight">${data.experience_years} Years</p>
+                        </div>
                     </div>
                 `;
-                container.appendChild(expDiv);
+                container.appendChild(expCard);
             }
 
-            document.getElementById('upload-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            document.getElementById('cv-results').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
 
         async function searchJobs() {
@@ -1380,11 +604,12 @@
             const container = document.getElementById('jobs-container');
             const empty = document.getElementById('empty-state');
             const resultsHeader = document.getElementById('results-header');
-            const queryDisplay = document.getElementById('query-display');
+            const queryDisplay = document.getElementById('query-text');
 
             loading.classList.remove('hidden');
             container.innerHTML = '';
             empty.classList.add('hidden');
+            resultsHeader.classList.add('hidden');
 
             const params = new URLSearchParams({
                 remote: document.getElementById('work-type').value,
@@ -1402,7 +627,7 @@
 
                 if (data.search_query_used) {
                     const terms = data.search_query_used.split(' ').slice(0, 3).join(', ');
-                    queryDisplay.innerHTML = `🔍 ${terms} • ${data.count} jobs`;
+                    queryDisplay.textContent = `${terms} • ${data.count} jobs`;
                 }
 
                 if (data.jobs.length === 0) {
@@ -1412,7 +637,7 @@
 
                 data.jobs.forEach((job, idx) => {
                     setTimeout(() => {
-                        container.appendChild(createJobCard(job, idx));
+                        container.appendChild(createJobCard(job));
                     }, idx * 100);
                 });
             } catch (error) {
@@ -1422,82 +647,81 @@
             }
         }
 
-        function createJobCard(job, idx) {
+        function createJobCard(job) {
             const card = document.createElement('div');
-            card.className = 'job-card-premium';
-            card.style.animationDelay = `${idx * 0.1}s`;
-
+            card.className = 'group relative rounded-xl border bg-card text-card-foreground shadow transition-all hover:shadow-lg hover:border-primary/20 animate-fade-in';
+            
             const score = job.match_score || 0;
-            const circumference = 2 * Math.PI * 28;
-            const offset = circumference - (score / 100) * circumference;
-            const scoreClass = score >= 75 ? 'match-high' : score >= 50 ? 'match-medium' : 'match-low';
+            const scoreColor = score >= 75 ? 'text-green-600 dark:text-green-400 border-green-200 dark:border-green-800 bg-green-50 dark:bg-green-950/30' : 
+                              score >= 50 ? 'text-amber-600 dark:text-amber-400 border-amber-200 dark:border-amber-800 bg-amber-50 dark:bg-amber-950/30' : 
+                              'text-red-600 dark:text-red-400 border-red-200 dark:border-red-800 bg-red-50 dark:bg-red-950/30';
 
-            const tagsHtml = (job.tags || []).slice(0, 6).map(t => 
-                `<span class="tag-pill">${t}</span>`
+            const tagsHtml = (job.tags || []).slice(0, 5).map(tag => 
+                `<span class="inline-flex items-center rounded-md bg-secondary px-2 py-1 text-xs font-medium text-secondary-foreground ring-1 ring-inset ring-secondary/20">${tag}</span>`
             ).join('');
 
-            const remotePill = job.remote ? 
-                `<span class="meta-pill pill-remote">🌐 Remote</span>` : 
-                `<span class="meta-pill pill-onsite">🏢 On-site</span>`;
+            const remoteBadge = job.remote ?
+                `<span class="inline-flex items-center gap-1 rounded-full bg-green-50 dark:bg-green-950/30 px-2.5 py-0.5 text-xs font-medium text-green-700 dark:text-green-400 ring-1 ring-inset ring-green-600/20">🌐 Remote</span>` :
+                `<span class="inline-flex items-center gap-1 rounded-full bg-blue-50 dark:bg-blue-950/30 px-2.5 py-0.5 text-xs font-medium text-blue-700 dark:text-blue-400 ring-1 ring-inset ring-blue-700/10">🏢 On-site</span>`;
 
-            const visaPill = job.visa_sponsorship ? `<span class="meta-pill pill-visa">🛂 Visa</span>` : '';
+            const visaBadge = job.visa_sponsorship ? 
+                `<span class="inline-flex items-center gap-1 rounded-full bg-purple-50 dark:bg-purple-950/30 px-2.5 py-0.5 text-xs font-medium text-purple-700 dark:text-purple-400 ring-1 ring-inset ring-purple-700/10">🛂 Visa</span>` : '';
 
             card.innerHTML = `
-                <div class="match-score-circle ${scoreClass}">
-                    <svg width="64" height="64" viewBox="0 0 64 64" style="transform: rotate(-90deg);">
-                        <circle class="circle-bg" cx="32" cy="32" r="28"/>
-                        <circle class="circle-progress" cx="32" cy="32" r="28" 
-                                stroke-dasharray="${circumference}" 
-                                stroke-dashoffset="${offset}"/>
-                    </svg>
-                    <div class="score-text">
-                        <span>${Math.round(score)}</span>
-                        <span class="score-label">Match</span>
-                    </div>
-                </div>
-
-                <div class="job-content">
-                    <h3 class="job-title-premium">${job.title || 'Unknown Position'}</h3>
-                    <div class="company-row">
-                        <div class="company-icon">🏢</div>
-                        <div class="company-name">${job.company || 'Unknown Company'}</div>
-                    </div>
-
-                    <div class="job-meta-row">
-                        ${remotePill}
-                        ${visaPill}
-                        <span class="meta-pill">📡 ${job.source || 'Job Board'}</span>
-                    </div>
-
-                    <div class="job-description-premium">${job.description || ''}</div>
-
-                    <div class="job-tags-row">${tagsHtml}</div>
-
-                    <div class="job-footer-row">
-                        <div class="location-pill">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-                                <circle cx="12" cy="10" r="3"/>
-                            </svg>
-                            ${job.location || 'Location not specified'}
+                <div class="p-6 space-y-4">
+                    <div class="flex items-start justify-between">
+                        <div class="space-y-1 pr-16">
+                            <h3 class="font-semibold leading-tight tracking-tight text-lg line-clamp-2">${job.title || 'Unknown Position'}</h3>
+                            <div class="flex items-center gap-2 text-sm text-muted-foreground">
+                                <span class="font-medium text-foreground">${job.company || 'Unknown Company'}</span>
+                            </div>
                         </div>
-                        <a href="${job.url || '#'}" target="_blank" class="apply-btn-premium">
-                            Apply Now
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <line x1="5" y1="12" x2="19" y2="12"/>
-                                <polyline points="12 5 19 12 12 19"/>
+                        <div class="absolute top-4 right-4 flex flex-col items-center">
+                            <div class="h-14 w-14 rounded-full border-2 flex items-center justify-center text-lg font-bold ${scoreColor}">
+                                ${Math.round(score)}
+                            </div>
+                            <span class="text-[10px] font-medium text-muted-foreground uppercase tracking-wider mt-1">Match</span>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-wrap gap-2">
+                        ${remoteBadge}
+                        ${visaBadge}
+                        <span class="inline-flex items-center rounded-full bg-muted px-2.5 py-0.5 text-xs font-medium text-muted-foreground">📡 ${job.source || 'Job Board'}</span>
+                    </div>
+
+                    <p class="text-sm text-muted-foreground line-clamp-3 leading-relaxed">${job.description || ''}</p>
+
+                    <div class="flex flex-wrap gap-2">
+                        ${tagsHtml}
+                    </div>
+
+                    <div class="flex items-center justify-between pt-4 border-t border-border">
+                        <div class="flex items-center gap-1.5 text-sm text-muted-foreground">
+                            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" stroke-linecap="round" stroke-linejoin="round"/>
+                                <circle cx="12" cy="10" r="3" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            <span class="truncate max-w-[150px]">${job.location || 'Not specified'}</span>
+                        </div>
+                        <a href="${job.url || '#'}" target="_blank" 
+                           class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-9 px-4 py-2 gap-2 shadow-sm hover:shadow-md hover:scale-105 active:scale-95 transition-all">
+                            Apply
+                            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M5 12h14" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="m12 5 7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
                         </a>
                     </div>
 
-                    ${job.salary ? `<div style="margin-top: 1rem; color: var(--success); font-weight: 600; font-size: 0.95rem;">💰 ${job.salary}</div>` : ''}
+                    ${job.salary ? `<div class="pt-2 text-sm font-semibold text-green-600 dark:text-green-400">💰 ${job.salary}</div>` : ''}
                 </div>
             `;
 
             return card;
         }
 
-        // Initial load
+        // Initial search
         searchJobs();
     </script>
 </body>
